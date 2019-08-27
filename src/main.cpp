@@ -15,6 +15,7 @@ vex::brain       Brain;
 // A global instance of vex::competition
 vex::competition Competition;
 
+int unit = 1;
 // define your global instances of motors and other devices here
 
 
