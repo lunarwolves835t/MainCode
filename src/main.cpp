@@ -31,28 +31,45 @@ void autonomous() {
 
 void drivercontrol() {
 // mecanum drive
-/*
+
   while (true) {
-    if (axis2Ratio == true) {
-      MotorFrontLeft.spin(vex::directionType::fwd,axis2Ratio,velocityUnits::pct);
+
+  axis1Ratio = ((Controller.Axis1.value()/127)*100);
+  axis2Ratio = ((Controller.Axis2.value()/127)*100);
+  axis3Ratio = ((Controller.Axis3.value()/127)*100);
+  axis4Ratio = ((Controller.Axis4.value()/127)*100);
+
+    
+      MotorFrontLeft.spin(vex::directionType::fwd,axis1Ratio,velocityUnits::pct);
       MotorFrontRight.spin(vex::directionType::fwd,axis2Ratio,velocityUnits::pct);
       MotorBackLeft.spin(vex::directionType::fwd,axis2Ratio,velocityUnits::pct);
       MotorBackRight.spin(vex::directionType::fwd,axis2Ratio,velocityUnits::pct);
-    }
-    else if (axis1Ratio == true) {
-      MotorFrontLeft.spin(vex::directionType::fwd,-axis1Ratio,velocityUnits::pct);
-      MotorFrontRight.spin(vex::directionType::fwd,axis1Ratio,velocityUnits::pct);
-      MotorBackLeft.spin(vex::directionType::fwd,axis1Ratio,velocityUnits::pct);
-      MotorBackRight.spin(vex::directionType::fwd,-axis1Ratio,velocityUnits::pct);
-    }
+      if (Controller.Axis1.value() == 0) {
+      MotorFrontLeft.stop();
+      MotorFrontRight.stop();
+      MotorBackLeft.stop();
+      MotorBackRight.stop();
+      }
+    
+
  
   }
-  */
+
+}
+
+float clamp(float n, float lower, float upper) {
+  return std::max(lower, std::min(n, upper));
 }
 
 int main() {
   Competition.autonomous(autonomous);
   Competition.drivercontrol(drivercontrol);
   // test things here
-  Brain.Screen.print(Controller.Axis1.value());
+  while(true){
+    int Axis1N = static_cast<int>(clamp(Controller.Axis1.value(), -127, 127));
+
+    Brain.Screen.clearScreen();
+    Brain.Screen.print(Axis1N);
+    Brain.Screen.newLine();
+  }
 }
