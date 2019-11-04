@@ -220,20 +220,24 @@ class Cont{
     ;
   }
   void driveBase(void){
-    double speedRight = Controller1.Axis3.position(percent)*.7 + (1-Controller1.Axis1.position(percent)*.3) - Controller1.Axis4.position(percent);
-    FrontRight.spin(directionType::rev, speedRight, percent);
-    BackRight.spin(directionType::rev, speedRight, percent);
-    double speedLeft = Controller1.Axis3.position(percent)*.7 + (.7+Controller1.Axis1.position(percent)*.3) + Controller1.Axis4.position(percent);
-    FrontLeft.spin(directionType::rev, speedLeft, percent);
-    BackLeft.spin(directionType::rev, speedLeft, percent);
+    int ratio = 10;
+    double speedRight = Controller1.Axis3.position(percent)*70 - Controller1.Axis1.position(percent)*100;
+    speedRight /= ratio;
+    FrontRight.spin(directionType::fwd, speedRight, percent);
+    BackRight.spin(directionType::fwd, speedRight, percent);
+    double speedLeft = Controller1.Axis3.position(percent)*70 + Controller1.Axis1.position(percent)*100;
+    speedLeft /= ratio;
+    FrontLeft.spin(directionType::fwd, speedLeft, percent);
+    BackLeft.spin(directionType::fwd, speedLeft, percent);
     
   }
   void slow(void){
+    //Rail.setMaxTorque(1, percentUnits::pct);
     if(Controller1.ButtonA.pressing()){
-    Rail.spin(directionType::fwd, 1, velocityUnits::pct);
+    Rail.spin(directionType::fwd, 100, velocityUnits::pct);
     }
     else if(Controller1.ButtonY.pressing()){
-    Rail.spin(directionType::rev, 1, velocityUnits::pct); 
+    Rail.spin(directionType::rev, 100, velocityUnits::pct); 
     }
     else{
     Rail.stop();
