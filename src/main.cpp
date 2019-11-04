@@ -220,7 +220,7 @@ class Cont{
     ;
   }
   void driveBase(void){
-    int ratio = 10;
+    int ratio = 30;
     double speedRight = Controller1.Axis3.position(percent)*70 - Controller1.Axis1.position(percent)*100;
     speedRight /= ratio;
     FrontRight.spin(directionType::fwd, speedRight, percent);
@@ -229,9 +229,9 @@ class Cont{
     speedLeft /= ratio;
     FrontLeft.spin(directionType::fwd, speedLeft, percent);
     BackLeft.spin(directionType::fwd, speedLeft, percent);
-    
+      
   }
-  void slow(void){
+  void rails(void){
     //Rail.setMaxTorque(1, percentUnits::pct);
     if(Controller1.ButtonA.pressing()){
     Rail.spin(directionType::fwd, 100, velocityUnits::pct);
@@ -250,7 +250,7 @@ int main() {
   vexcodeInit();
   while(true){
     Cont cont;
-    cont.slow();
+    cont.rails();
     cont.driveBase();
   }
 
