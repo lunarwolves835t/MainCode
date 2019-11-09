@@ -46,6 +46,16 @@
 // BackLeft             motor         3               
 // BackRight            motor         4               
 // Controller1          controller                    
+// Rail                 motor         5               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// FrontRight           motor         1               
+// FrontLeft            motor         2               
+// BackLeft             motor         3               
+// BackRight            motor         4               
+// Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
@@ -220,7 +230,7 @@ class Cont{
     ;
   }
   void driveBase(void){
-    int ratio = 30;
+    int ratio = 50;
     double speedRight = Controller1.Axis3.position(percent)*70 - Controller1.Axis1.position(percent)*100;
     speedRight /= ratio;
     FrontRight.spin(directionType::fwd, speedRight, percent);
