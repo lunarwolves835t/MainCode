@@ -154,12 +154,33 @@ class Cont{
     }
   }
 }; 
+
+class Auton{
+  public:
+
+  //wheel diamter: 4 in 
+  void (void){
+    MotorFrontLeft.rotateFor(.47746482982, rotationUnits::rev, 
+
+
+  }
+}
+
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  bool controll = true;
   Cont cont;
-  while (true) {
-    cont.armHands();
-    cont.driveBase();
+  Auton auton;
+  if(controll){
+    while (true) {
+      cont.armHands();
+      cont.driveBase();
+    }
+  }
+  else{
+    while(true){
+
+    }
   }
 }
