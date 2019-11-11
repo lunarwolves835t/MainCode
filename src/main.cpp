@@ -89,10 +89,10 @@ using namespace vex;
 vex::competition Competition;
 vex::controller Controller;
 vex::motor MotorFrontLeft = vex::motor(vex::PORT2);
-vex::motor MotorFrontRight = vex::motor(vex::PORT1);
+vex::motor MotorFrontRight = vex::motor(vex::PORT10);
 vex::motor MotorBackLeft = vex::motor(vex::PORT3);
 vex::motor MotorBackRight = vex::motor(vex::PORT4);
-vex::motor MotorIntakeArm = vex::motor(vex::PORT10);
+vex::motor MotorIntakeArm = vex::motor(vex::PORT1);
 vex::motor MotorIntakeLeft = vex::motor(vex::PORT9);
 vex::motor MotorIntakeRight = vex::motor(vex::PORT8);
 vex::motor MotorRail = vex::motor(vex::PORT5);
@@ -113,29 +113,25 @@ class Cont{
         }
         //arms
         if (Controller.ButtonDown.pressing()) {
-          MotorIntakeArm.stop(vex::brakeType::hold);
-          MotorIntakeArm.spin(vex::directionType::fwd,100,velocityUnits::pct);
+          MotorIntakeArm.stop(vex::brakeType::brake);
+          MotorIntakeArm.spin(vex::directionType::fwd,50,velocityUnits::pct);
         }
         if (Controller.ButtonUp.pressing()) {
-          MotorIntakeArm.stop(vex::brakeType::hold);
-          MotorIntakeArm.spin(vex::directionType::fwd,-25,velocityUnits::pct); 
+          // MotorIntakeArm.stop(vex::brakeType::hold);
+          MotorIntakeArm.spin(vex::directionType::fwd,25,velocityUnits::pct); 
         }
         else {
-          MotorFrontLeft.stop(vex::brakeType::coast);
-          MotorFrontRight.stop(vex::brakeType::coast);
-          MotorBackLeft.stop(vex::brakeType::coast);
-          MotorBackRight.stop(vex::brakeType::coast);
           MotorIntakeArm.stop(vex::brakeType::hold);
         }
     
   }
   void driveBase(void){
-    int ratio = 80;
-    double speedRight = Controller.Axis3.position(percent)*70 - Controller.Axis1.position(percent)*100;
+    int ratio = 200;
+    double speedRight = Controller.Axis1.position(percent)*70 - Controller.Axis3.position(percent)*100;
     speedRight /= ratio;
     MotorFrontRight.spin(directionType::fwd, speedRight, percent);
     MotorBackRight.spin(directionType::fwd, speedRight, percent);
-    double speedLeft = Controller.Axis3.position(percent)*70 + Controller.Axis1.position(percent)*100;
+    double speedLeft = Controller.Axis1.position(percent)*70 + Controller.Axis3.position(percent)*100;
     speedLeft /= ratio;
     MotorFrontLeft.spin(directionType::fwd, speedLeft, percent);
     MotorBackLeft.spin(directionType::fwd, speedLeft, percent);
@@ -144,10 +140,10 @@ class Cont{
   void rails(void){
     //Rail.setMaxTorque(1, percentUnits::pct);
     if(Controller.ButtonA.pressing()){
-    MotorRail.spin(directionType::fwd, 10, velocityUnits::pct);
+    MotorRail.spin(directionType::fwd, 2, velocityUnits::pct);
     }
     if(Controller.ButtonB.pressing()){
-    MotorRail.spin(directionType::rev, 10, velocityUnits::pct);
+    MotorRail.spin(directionType::rev, 2, velocityUnits::pct);
     }
     else{
       MotorRail.stop(coast);
@@ -188,6 +184,8 @@ class Auton{
   void instructions(void){
     move(23.5);
     pickup(4);
+    turnn(-1);
+    move(12);
 
   }
 };
@@ -195,17 +193,22 @@ class Auton{
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  bool controll = false;
+  bool controll = true;
   Cont cont;
   Auton auton;
   if(controll){
     while (true) {
       cont.armHands();
       cont.driveBase();
+      cont.rails();
     }
   }
   else{
     while(true){
+      MotorFrontRight.setVelocity(50, percentUnits::pct);
+      MotorFrontLeft.setVelocity(50, percentUnits::pct);
+      MotorBackRight.setVelocity(50, percentUnits::pct);
+      MotorBackLeft.setVelocity(50, percentUnits::pct);
       auton.instructions();
     }
   }
