@@ -177,16 +177,17 @@ class Auton{
     MotorBackLeft.spin(fwd, vel, velocityUnits::pct);
   }
 
-  void pickup(){
-    MotorIntakeLeft.spin(fwd, 100, velocityUnits::pct);
-    MotorIntakeRight.spin(fwd, 100, velocityUnits::pct);
-    `
+  void pickup(int num){
+    for(int i = 0; i < num; i++){
+      MotorIntakeLeft.spin(fwd, 100, velocityUnits::pct);
+      MotorIntakeRight.spin(fwd, 100, velocityUnits::pct);
+      move(5.5);
+    }
   }
-
-  void 
 
   void instructions(void){
     move(23.5);
+    pickup(4);
 
   }
 };
@@ -194,7 +195,7 @@ class Auton{
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  bool controll = true;
+  bool controll = false;
   Cont cont;
   Auton auton;
   if(controll){
@@ -205,7 +206,7 @@ int main() {
   }
   else{
     while(true){
-
+      auton.instructions();
     }
   }
 }
