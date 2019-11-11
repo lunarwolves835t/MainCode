@@ -144,10 +144,10 @@ class Cont{
   void rails(void){
     //Rail.setMaxTorque(1, percentUnits::pct);
     if(Controller.ButtonA.pressing()){
-    MotorRail.spin(directionType::fwd, 50, velocityUnits::pct);
+    MotorRail.spin(directionType::fwd, 10, velocityUnits::pct);
     }
     if(Controller.ButtonB.pressing()){
-    MotorRail.spin(directionType::rev, 500, velocityUnits::pct);
+    MotorRail.spin(directionType::rev, 10, velocityUnits::pct);
     }
     else{
       MotorRail.stop(coast);
@@ -157,14 +157,39 @@ class Cont{
 
 class Auton{
   public:
+  
 
   //wheel diamter: 4 in 
-  void (void){
-    MotorFrontLeft.rotateFor(.47746482982, rotationUnits::rev, 
+  void move(double dist){
+    const double circum = 4 * 3.1415;
+    double revo = dist/circum;
+    MotorFrontLeft.rotateFor(revo, rotationUnits::rev, false);
+    MotorFrontRight.rotateFor(revo, rotationUnits::rev, false);
+    MotorBackLeft.rotateFor(revo, rotationUnits::rev, false);
+    MotorBackRight.rotateFor(revo, rotationUnits::rev);
+  }
 
+  void turnn(int direc){  //direc = 1 || -1
+    const double vel = 50;
+    MotorFrontLeft.spin(fwd, vel, velocityUnits::pct);
+    MotorFrontRight.spin(fwd, -vel, velocityUnits::pct);
+    MotorBackRight.spin(fwd, -vel, velocityUnits::pct);
+    MotorBackLeft.spin(fwd, vel, velocityUnits::pct);
+  }
+
+  void pickup(){
+    MotorIntakeLeft.spin(fwd, 100, velocityUnits::pct);
+    MotorIntakeRight.spin(fwd, 100, velocityUnits::pct);
+    `
+  }
+
+  void 
+
+  void instructions(void){
+    move(23.5);
 
   }
-}
+};
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
