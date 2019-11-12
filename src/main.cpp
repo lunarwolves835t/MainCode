@@ -1,3 +1,4 @@
+
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
@@ -104,23 +105,25 @@ class Cont{
   void armHands(void){
         //hands
         if (Controller.ButtonA.pressing()) {
-          MotorIntakeLeft.spin(vex::directionType::fwd,-50,velocityUnits::pct);
-          MotorIntakeRight.spin(vex::directionType::fwd,50,velocityUnits::pct);
+          MotorIntakeLeft.spin(vex::directionType::fwd,-100,velocityUnits::pct);
+          MotorIntakeRight.spin(vex::directionType::fwd,100,velocityUnits::pct);
         }
         if (Controller.ButtonY.pressing()) {
-          MotorIntakeLeft.spin(vex::directionType::fwd,50,velocityUnits::pct);
-          MotorIntakeRight.spin(vex::directionType::fwd,-50,velocityUnits::pct);
+          MotorIntakeLeft.spin(vex::directionType::fwd,100,velocityUnits::pct);
+          MotorIntakeRight.spin(vex::directionType::fwd,-100,velocityUnits::pct);
         }
         //arms
         if (Controller.ButtonDown.pressing()) {
-          MotorIntakeArm.stop(vex::brakeType::brake);
-          MotorIntakeArm.spin(vex::directionType::fwd,50,velocityUnits::pct);
+          // MotorIntakeArm.stop(vex::brakeType::brake);
+          MotorIntakeArm.spin(vex::directionType::rev,60,velocityUnits::pct);
         }
-        if (Controller.ButtonUp.pressing()) {
-          // MotorIntakeArm.stop(vex::brakeType::hold);
-          MotorIntakeArm.spin(vex::directionType::fwd,25,velocityUnits::pct); 
+        else if (Controller.ButtonUp.pressing()) {
+
+          MotorIntakeArm.spin(vex::directionType::fwd,50,velocityUnits::pct); 
         }
         else {
+          MotorIntakeLeft.stop(vex::brakeType::hold);
+          MotorIntakeRight.stop(vex::brakeType::hold);
           MotorIntakeArm.stop(vex::brakeType::hold);
         }
     
@@ -140,10 +143,10 @@ class Cont{
   void rails(void){
     //Rail.setMaxTorque(1, percentUnits::pct);
     if(Controller.ButtonA.pressing()){
-    MotorRail.spin(directionType::fwd, 2, velocityUnits::pct);
+    MotorRail.spin(directionType::fwd, 10, velocityUnits::pct);
     }
-    if(Controller.ButtonB.pressing()){
-    MotorRail.spin(directionType::rev, 2, velocityUnits::pct);
+    else if(Controller.ButtonB.pressing()){
+    MotorRail.spin(directionType::fwd, -30, velocityUnits::pct);
     }
     else{
       MotorRail.stop(coast);
@@ -186,6 +189,7 @@ class Auton{
     pickup(4);
     turnn(-1);
     move(12);
+    turnn(-1);
 
   }
 };
