@@ -172,10 +172,10 @@ void pre_auton(){
   MotorIntakeArm.setVelocity(100, pct);
     MotorIntakeArm.rotateFor(2, rotationUnits::rev);
     
-    MotorIntakeArm.rotateFor(-1.75, rotationUnits::rev);
+    MotorIntakeArm.rotateFor(-2, rotationUnits::rev);
     MotorIntakeArm.rotateFor(2, rotationUnits::rev);
     
-    MotorIntakeArm.rotateFor(-1.75, rotationUnits::rev);
+    MotorIntakeArm.rotateFor(-1.65, rotationUnits::rev);
 }
 
 int main() {
