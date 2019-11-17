@@ -38,6 +38,8 @@ class Cont{
     
   }
   void hands(void){ 
+        MotorIntakeRight.setMaxTorque(100, pct);
+        MotorIntakeLeft.setMaxTorque(100, pct);
         if (Controller.ButtonA.pressing()) {
           MotorIntakeLeft.spin(vex::directionType::fwd,-20,velocityUnits::pct);
           MotorIntakeRight.spin(vex::directionType::fwd,20,velocityUnits::pct);
@@ -52,7 +54,11 @@ class Cont{
         }
   }
   void driveBase(void){
-    int ratio = 250; //increase to make drive slower
+    int ratio = 100; //increase to make drive slower
+    MotorBackLeft.setMaxTorque(100, pct);
+    MotorFrontLeft.setMaxTorque(100, pct);
+    MotorBackRight.setMaxTorque(100, pct);
+    MotorFrontRight.setMaxTorque(100, pct);
     double speedRight = Controller.Axis1.position(percent)*70 - Controller.Axis3.position(percent)*100;
     speedRight /= ratio;
     MotorFrontRight.spin(directionType::fwd, speedRight, percent);
@@ -138,17 +144,23 @@ class Auton{
 
 
   void instructions(void){
-    move(23.5); //23.5
-    pickup(4);
-    turnn(-1);
-    // move(12);
-    // turnn(-1);
+    move(20);
+    move(-10); //23.5
+    //pickup(4);
+    //turnn(-1);
+    //move(12);
+    //turnn(-1);
 
   }
 };
+void pre_auton(){
+  MotorIntakeArm.setMaxTorque(100, pct);
+
+}
 
 void autonomous(void){
   Auton auton;
+  pre_auton();
   MotorFrontRight.setVelocity(50, percentUnits::pct);
   MotorFrontLeft.setVelocity(50, percentUnits::pct);
   MotorBackRight.setVelocity(50, percentUnits::pct);
@@ -167,27 +179,17 @@ void usercontrol(void){
   }
 }
 
-void pre_auton(){
-  MotorIntakeArm.setMaxTorque(100, pct);
-  MotorIntakeArm.setVelocity(100, pct);
-    MotorIntakeArm.rotateFor(2, rotationUnits::rev);
-    
-    MotorIntakeArm.rotateFor(-2, rotationUnits::rev);
-    MotorIntakeArm.rotateFor(2, rotationUnits::rev);
-    
-    MotorIntakeArm.rotateFor(-1.65, rotationUnits::rev);
-}
+
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  pre_auton();
+  //pre_auton();
   // tell the competition code what to run for the autonomous period
   // while(true){
   //   usercontrol();
   // }
-  // autonomous();
   Competition.autonomous( autonomous );
   // tell the competition code what to run for the driver control period
   Competition.drivercontrol( usercontrol );
